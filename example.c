@@ -110,6 +110,25 @@ const uint8_t layer3[84] = {
 														KEY_NUM_LOCK		// COL 14
 };
 
+const uint8_t layer4[84] = {
+		//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
+ NULL,		KEY_FN,			KEY_LEFT_SHIFT,		KEY_LEFT_CTRL,		KEY_TAB,		KEY_MACRO1,		// COL  0
+		KEY_LEFT_GUI,		KEY_Z,			KEY_VOLDN,		KEY_APP,		KEY_MACRO2,	NULL,	// COL  1
+		KEY_LEFT_ALT,		KEY_X,			KEY_VOLUP,		KEY_W,			KEY_MACRO3,	NULL,	// COL  2
+		NULL,			KEY_C,			KEY_MUTE,		KEY_E,			KEY_MACRO4,	NULL,	// COL  3
+		NULL,			KEY_V,			KEY_F,			KEY_R,			KEY_F4,		NULL,	// COL  4
+		KEY_SPACE,		KEY_B,			KEY_G,			KEY_T,			KEY_F5,		NULL,	// COL  5
+		NULL,			KEY_N,			KEY_LEFT,			KEY_Y,			KEY_F6,		NULL,	// COL  6 
+		NULL,			KEYPAD_0,		KEY_DOWN,		KEYPAD_4,		KEYPAD_7,	NULL,	// COL  7
+		NULL,			KEY_COMMA,		KEY_UP,		KEYPAD_5,		KEYPAD_8,	NULL,	// COL  8
+		KEY_RIGHT_ALT,		KEY_PERIOD,		KEY_RIGHT,		KEYPAD_6,		KEYPAD_9,	NULL,	// COL  9
+		KEY_RIGHT_GUI,		KEY_SLASH,		KEY_SEMICOLON,		KEY_P,			KEYPAD_SLASH,	NULL,	// COL 10
+		NULL,			NULL,			KEY_QUOTE,		KEY_LEFT_BRACE,		KEYPAD_MINUS,	NULL,	// COL 11
+		KEY_RIGHT_CTRL,		KEY_RIGHT_SHIFT,	NULL,			KEY_RIGHT_BRACE,	KEYPAD_PLUS,	NULL,	// COL 12
+		KEY_DELETE,		KEY_FN,			KEY_MACRO5,		KEY_BACKSPACE,		KEYPAD_ASTERIX,		// COL 13    
+														KEY_NUM_LOCK		// COL 14
+};
+
 const uint8_t *layout = layer1;
 
 uint8_t *const row_port[6]  = { _PINB,  _PINB,  _PINB,  _PINB,  _PINB,  _PINB};
@@ -121,6 +140,9 @@ bool pressed[84];
 uint8_t queue[7] = {0,0,0,0,0,0,0};
 uint8_t mod_keys = 0;
 
+bool semicolonPressed;
+bool semicolonPassed;
+
 void init(void);
 void send(void);
 void poll(void);
@@ -129,6 +151,8 @@ void key_release(uint8_t key_id);
 
 int main(void) {
   init();
+  semicolonPressed = false;
+  semicolonPassed = false;
   for(;;) poll();
 }
 
@@ -139,6 +163,8 @@ void send(void) {
     layout = layer2;
   else if(pressed[FN_KEY2_ID])
 	  layout = layer3;
+  else if (semicolonPressed)
+	  layout = layer4;
   else
     layout = layer1;
 
@@ -179,8 +205,19 @@ void poll() {
 }
 
 void key_press(uint8_t key_id) {
-  uint8_t i;
+	  uint8_t i;
   pressed[key_id] = true;
+	
+	if (layout[key_id] == KEY_SEMICOLON)
+	{
+		semicolonPressed = true;
+		semicolonPassed = false;
+		return;
+	}
+
+	if (semicolonPressed)
+		semicolonPassed = true;
+
   if(is_modifier[key_id])
     mod_keys |= layer1[key_id];
   else {
@@ -190,9 +227,19 @@ void key_press(uint8_t key_id) {
   send();
 }
 
+
 void key_release(uint8_t key_id) {
-  uint8_t i;
-  pressed[key_id] = false;
+uint8_t i;
+  pressed[key_id] = false;	
+
+	if (layout[key_id] == KEY_SEMICOLON)
+		{
+			semicolonPressed = false;
+			if (semicolonPassed == false)
+				SendSingleKey(KEY_SEMICOLON);
+			return;
+		}
+		
   if(is_modifier[key_id])
     mod_keys &= ~layout[key_id];
   else {
