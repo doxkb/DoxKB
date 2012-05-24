@@ -1,17 +1,17 @@
 /* USB Keyboard Example for Teensy USB Development Board
  * http://www.pjrc.com/teensy/usb_keyboard.html
  * Copyright (c) 2009 PJRC.COM, LLC
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,9 +34,8 @@
  **************************************************************************/
 
 // You can change these to give your code its own name.
-#define STR_MANUFACTURER	L"MfgName"
-#define STR_PRODUCT		L"Keyboard"
-
+#define STR_MANUFACTURER	L"Dominic Beauchamp"
+#define STR_PRODUCT		L"DoxKB"
 
 // Mac OS-X and Linux automatically load the correct drivers.  On
 // Windows, even though the driver is supplied by Microsoft, an
@@ -45,15 +44,12 @@
 #define VENDOR_ID		0x16C0
 #define PRODUCT_ID		0x047C
 
-
 // USB devices are supposed to implment a halt feature, which is
 // rarely (if ever) used.  If you comment this line out, the halt
 // code will be removed, saving 102 bytes of space (gcc 4.3.0).
 // This is not strictly USB compliant, but works with all major
 // operating systems.
 #define SUPPORT_ENDPOINT_HALT
-
-
 
 /**************************************************************************
  *
@@ -75,7 +71,6 @@ static const uint8_t PROGMEM endpoint_config_table[] = {
 	0
 };
 
-
 /**************************************************************************
  *
  *  Descriptor Data
@@ -87,7 +82,6 @@ static const uint8_t PROGMEM endpoint_config_table[] = {
 // changed items are editable at the top of this file.  Changing things
 // in here should only be done by those who've read chapter 9 of the USB
 // spec and relevant portions of any USB class specifications!
-
 
 static uint8_t PROGMEM device_descriptor[] = {
 	18,					// bLength
@@ -106,7 +100,6 @@ static uint8_t PROGMEM device_descriptor[] = {
 	1					// bNumConfigurations
 };
 
-
 #define KBD_INTERFACE		0
 #define KBD_ENDPOINT		1
 #define KBD_SIZE		8
@@ -115,7 +108,6 @@ static uint8_t PROGMEM device_descriptor[] = {
 
 // Keyboard Protocol 1, HID 1.11 spec, Appendix B, page 59-60
 static uint8_t PROGMEM keyboard_hid_report_desc[] = {
-
 	        0x05, 0x01,          // Usage Page (Generic Desktop),
         0x09, 0x06,          // Usage (Keyboard),
         0xA1, 0x01,          // Collection (Application),
@@ -148,39 +140,6 @@ static uint8_t PROGMEM keyboard_hid_report_desc[] = {
         0x29, 0xFF,          //   Usage Maximum (255),
         0x81, 0x00,          //   Input (Data, Array),
         0xc0                 // End Collection
-
-        //0x05, 0x01,          // Usage Page (Generic Desktop),
-        //0x09, 0x06,          // Usage (Keyboard),
-        //0xA1, 0x01,          // Collection (Application),
-        //0x75, 0x01,          //   Report Size (1),
-        //0x95, 0x08,          //   Report Count (8),
-        //0x05, 0x07,          //   Usage Page (Key Codes),
-        //0x19, 0xE0,          //   Usage Minimum (224),
-        //0x29, 0xE7,          //   Usage Maximum (231),
-        //0x15, 0x00,          //   Logical Minimum (0),
-        //0x25, 0x01,          //   Logical Maximum (1),
-        //0x81, 0x02,          //   Input (Data, Variable, Absolute), ;Modifier byte
-        //0x95, 0x01,          //   Report Count (1),
-        //0x75, 0x08,          //   Report Size (8),
-        //0x81, 0x03,          //   Input (Constant),                 ;Reserved byte
-        //0x95, 0x05,          //   Report Count (5),
-        //0x75, 0x01,          //   Report Size (1),
-        //0x05, 0x08,          //   Usage Page (LEDs),
-        //0x19, 0x01,          //   Usage Minimum (1),
-        //0x29, 0x05,          //   Usage Maximum (5),
-        //0x91, 0x02,          //   Output (Data, Variable, Absolute), ;LED report
-        //0x95, 0x01,          //   Report Count (1),
-        //0x75, 0x03,          //   Report Size (3),
-        //0x91, 0x03,          //   Output (Constant),                 ;LED report padding
-        //0x95, 0x06,          //   Report Count (6),
-        //0x75, 0x08,          //   Report Size (8),
-        //0x15, 0x00,          //   Logical Minimum (0),
-        //0x25, 0xE8,          //   Logical Maximum(104),				////////232
-        //0x05, 0x07,          //   Usage Page (Key Codes),
-        //0x19, 0x00,          //   Usage Minimum (0),
-        //0x29, 0xE8,          //   Usage Maximum (104),              ////////232
-        //0x81, 0x00,          //   Input (Data, Array),
-        //0xc0                 // End Collection
 };
 
 #define CONFIG1_DESC_SIZE        (9+9+9+7)
@@ -266,7 +225,6 @@ static struct descriptor_list_struct {
 };
 #define NUM_DESC_LIST (sizeof(descriptor_list)/sizeof(struct descriptor_list_struct))
 
-
 /**************************************************************************
  *
  *  Variables - these are the only non-stack RAM usage
@@ -299,13 +257,11 @@ static uint8_t keyboard_idle_count=0;
 // 1=num lock, 2=caps lock, 4=scroll lock, 8=compose, 16=kana
 volatile uint8_t keyboard_leds=0;
 
-
 /**************************************************************************
  *
  *  Public Functions - these are the API intended for the user
  *
  **************************************************************************/
-
 
 // initialize USB
 void usb_init(void)
@@ -327,7 +283,6 @@ uint8_t usb_configured(void)
 {
 	return usb_configuration;
 }
-
 
 // perform a single keystroke
 int8_t usb_keyboard_press(uint8_t key, uint8_t modifier)
@@ -383,8 +338,6 @@ int8_t usb_keyboard_send(void)
  *
  **************************************************************************/
 
-
-
 // USB Device Interrupt - handle all device-level events
 // the transmit buffer flushing is triggered by the start of frame
 //
@@ -422,8 +375,6 @@ ISR(USB_GEN_vect)
 	}
 }
 
-
-
 // Misc functions to wait for ready and send/receive packets
 static inline void usb_wait_in_ready(void)
 {
@@ -441,8 +392,6 @@ static inline void usb_ack_out(void)
 {
 	UEINTX = ~(1<<RXOUTI);
 }
-
-
 
 // USB Endpoint Interrupt - endpoint 0 is handled here.  The
 // other endpoints are manipulated by the user-callable
@@ -629,5 +578,3 @@ ISR(USB_COM_vect)
 	}
 	UECONX = (1<<STALLRQ) | (1<<EPEN);	// stall
 }
-
-
