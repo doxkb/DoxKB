@@ -8,91 +8,88 @@
 #define true            1
 #define false           0
 
-#define _PINB           (uint8_t *const)&PINB
-#define _PORTC          (uint8_t *const)&PORTC
-#define _PORTD          (uint8_t *const)&PORTD
-#define _PORTF          (uint8_t *const)&PORTF
+#define _PORTB         (uint8_t *const)&PORTB
+#define _PINC          (uint8_t *const)&PINC
+#define _PIND          (uint8_t *const)&PIND
+#define _PINF          (uint8_t *const)&PINF
 
 #define NULL            0
 #define NA              0
 #define KEY_MACRO       0
 #define KEY_FN          0
-#define FN_KEY1_ID		13*6+1
-#define FN_KEY2_ID		0*6+1
+#define FN_KEY1_ID		0*6+0
+#define FN_KEY2_ID		6*6+0
 
 #define KEY_MACRO1		0
-#define KEY_MACRO1_ID	0*6+5
+#define KEY_MACRO1_ID	13*6+0
 #define KEY_MACRO2		0
-#define KEY_MACRO2_ID	1*6+4
+#define KEY_MACRO2_ID	1*6+0
 #define KEY_MACRO3		0
-#define KEY_MACRO3_ID	2*6+4
+#define KEY_MACRO3_ID	2*6+0
 #define KEY_MACRO4		0
-#define KEY_MACRO4_ID	3*6+4
+#define KEY_MACRO4_ID	3*6+0
 #define KEY_MACRO5		0
-#define KEY_MACRO5_ID	13*6+2
+#define KEY_MACRO5_ID	4*6+0
 #define KEY_MACRO6		0
-#define KEY_MACRO6_ID	13*6+3
+#define KEY_MACRO6_ID	0*6+3
 
 const uint8_t is_modifier[84] = {
 			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
-1,			1,				1,				1,				0,				0,						// COL  0
-			1,				0,				0,				0,				0,				0,		// COL  1
-			1,				0,				0,				0,				0,				0,		// COL  2
+			1,				1,				1,				0,				0,				0,		// COL  0
+			0,				0,				0,				0,				0,				0,		// COL  1
+			0,				0,				0,				0,				0,				0,		// COL  2
 			0,				0,				0,				0,				0,				0,		// COL  3
-			0,				0,				0,				0,				0,				0,		// COL  4
+			1,				0,				0,				0,				0,				0,		// COL  4
 			0,				0,				0,				0,				0,				0,		// COL  5
-			0,				0,				0,				0,				0,				0,		// COL  6
+			1,				0,				1,				0,				0,				0,		// COL  6
 			0,				0,				0,				0,				0,				0,		// COL  7
 			0,				0,				0,				0,				0,				0,		// COL  8
-			1,				0,				0,				0,				0,				0,		// COL  9
-			1,				0,				0,				0,				0,				0,		// COL 10
+			0,				0,				0,				0,				0,				0,		// COL  9
+			0,				0,				0,				0,				0,				0,		// COL 10
 			0,				0,				0,				0,				0,				0,		// COL 11
-			0,				1,				0,				0,				0,				0,		// COL 12
-			0,				1,				0,				0,				0,						// COL 13
-																			0						// COL 14
+			1,				1,				0,				0,				0,				0,		// COL 12
+			0,				0,				0,				0,				0,				0		// COL 13
 };
 
 const uint8_t layer1[84] = {
 			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
-KEY_MACRO,	KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		KEY_ESC,				// COL  0
-			KEY_LEFT_GUI,	KEY_Z,			KEY_A,			KEY_Q,			KEY_1,			NULL,	// COL  1
-			KEY_LEFT_ALT,	KEY_X,			KEY_S,			KEY_W,			KEY_2,			NULL,	// COL  2
-			NULL,			KEY_C,			KEY_D,			KEY_E,			KEY_3,			NULL,	// COL  3
-			NULL,			KEY_V,			KEY_F,			KEY_R,			KEY_4,			NULL,	// COL  4
-			KEY_SPACE,		KEY_B,			KEY_G,			KEY_T,			KEY_5,			NULL,	// COL  5
-			NULL,			KEY_N,			KEY_H,			KEY_Y,			KEY_6,			NULL,	// COL  6
-			NULL,			KEY_M,			KEY_J,			KEY_U,			KEY_7,			NULL,	// COL  7
-			NULL,			KEY_COMMA,		KEY_K,			KEY_I,			KEY_8,			NULL,	// COL  8
-			KEY_RIGHT_ALT,	KEY_PERIOD,		KEY_L,			KEY_O,			KEY_9,			NULL,	// COL  9
-			KEY_RIGHT_GUI,	KEY_SLASH,		KEY_SEMICOLON,	KEY_P,			KEY_0,			NULL,	// COL 10
-			NULL,			NULL,			KEY_QUOTE,		KEY_LEFT_BRACE,	KEY_MINUS,		NULL,	// COL 11
-			KEY_APP,		KEY_RIGHT_SHIFT,NULL,			KEY_RIGHT_BRACE,KEY_EQUAL,		NULL,	// COL 12
-			KEY_DELETE,		KEY_FN,			KEY_ENTER,		KEY_BACKSPACE,	KEY_BACKSLASH,			// COL 13
-																			KEY_TILDE				// COL 14
+			KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		KEY_EQUAL,		NULL, 	// COL  0
+			KEY_LEFT,		KEY_Z,			KEY_A,			KEY_Q,			KEY_1,			NULL,	// COL  1
+			KEY_UP,			KEY_X,			KEY_S,			KEY_W,			KEY_2,			NULL,	// COL  2
+			KEY_DOWN,		KEY_C,			KEY_D,			KEY_E,			KEY_3, 			NULL,	// COL  3
+			KEY_LEFT_GUI,	KEY_V,			KEY_F,			KEY_R,			KEY_4,			NULL,	// COL  4
+			KEY_BACKSPACE,	KEY_B,			KEY_G,			KEY_T,			KEY_5,			NULL,	// COL  5
+			KEY_FN,			KEY_ENTER,		KEY_RIGHT_ALT,	KEY_ESC,		NULL,			NULL,	// COL  6
+			KEY_SPACE,		KEY_N,			KEY_H,			KEY_Y,			KEY_6,			NULL,	// COL  7
+			KEY_LEFT,		KEY_M,			KEY_J,			KEY_U,			KEY_7,			NULL,	// COL  8
+			KEY_DOWN,		KEY_COMMA,		KEY_K,			KEY_I,			KEY_8,			NULL,	// COL  9
+			KEY_UP,			KEY_PERIOD,		KEY_L,			KEY_O,			KEY_9,			NULL,	// COL 10
+			KEY_RIGHT,		KEY_SLASH,		KEY_SEMICOLON,	KEY_P,			KEY_0,			NULL,	// COL 11
+			KEY_APP,		KEY_RIGHT_SHIFT,KEY_QUOTE,		KEY_LEFT_BRACE,	KEY_MINUS,		NULL,	// COL 12
+			NULL,			NULL,			NULL,			NULL,			NULL,			NULL	// COL 13
 };
 
 const uint8_t layer2[84] = {
 			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
- NULL,		KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_CAPS_LOCK,	KEY_ESC,				// COL  0
-			KEY_LEFT_GUI,	KEY_Z,			KEY_LEFT,		KEY_Q,			KEY_F1,			NULL,	// COL  1
-			KEY_LEFT_ALT,	KEY_X,			KEY_DOWN,		KEY_UP,			KEY_F2,			NULL,	// COL  2
-			NULL,			KEY_C,			KEY_RIGHT,		KEY_E,			KEY_F3,			NULL,	// COL  3
-			NULL,			KEY_V,			KEY_F,			KEY_R,			KEY_F4,			NULL,	// COL  4
-			KEY_SPACE,		KEY_B,			KEY_G,			KEY_T,			KEY_F5,			NULL,	// COL  5
-			NULL,			KEY_N,			KEY_H,			KEY_Y,			KEY_F6,			NULL,	// COL  6
-			NULL,			KEY_M,			KEY_J,			KEY_U,			KEY_F7,			NULL,	// COL  7
-			NULL,			KEY_HOME,		KEY_PAGE_UP,	KEY_PRINTSCREEN,KEY_F8,			NULL,	// COL  8
-			KEY_RIGHT_ALT,	KEY_END,		KEY_PAGE_DOWN,	KEY_SCROLL_LOCK,KEY_F9,			NULL,	// COL  9
-			KEY_RIGHT_GUI,	KEY_DOWN,		KEY_LEFT,		KEY_PAUSE,		KEY_F10,		NULL,	// COL 10
-			NULL,			NULL,			KEY_RIGHT,		KEY_UP,			KEY_F11,		NULL,	// COL 11
-			KEY_APP,		KEY_RIGHT_SHIFT,NULL,			KEY_RIGHT_BRACE,KEY_F12,		NULL,	// COL 12
-			KEY_DELETE,		KEY_FN,			KEY_ENTER,		KEY_BACKSPACE,	KEY_INSERT,				// COL 13
-																			KEY_DELETE				// COL 14
+			KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_MACRO6,		KEY_F12,		NULL, 	// COL  0
+			KEY_MACRO2,		KEY_Z,			KEY_VOLDN,		KEY_BACKSLASH,	KEY_F1,			NULL,	// COL  1
+			KEY_MACRO3,		KEY_X,			KEY_VOLUP,		KEY_TILDE,		KEY_F2,			NULL,	// COL  2
+			KEY_MACRO4,		KEY_C,			KEY_DELETE,		KEY_E,			KEY_F3, 		NULL,	// COL  3
+			KEY_MACRO5,		KEY_V,			KEY_MUTE,		KEY_R,			KEY_F4,			NULL,	// COL  4
+			KEY_BACKSPACE,	KEY_B,			KEY_G,			KEY_T,			KEY_F5,			NULL,	// COL  5
+			KEY_FN,			KEY_ENTER,		KEY_RIGHT_ALT,	KEY_ESC,		NULL,			NULL,	// COL  6
+			KEY_SPACE,		KEY_HOME,		KEY_LEFT,		KEY_Y,			KEY_F6,			NULL,	// COL  7
+			KEY_LEFT,		KEY_PAGE_DOWN,	KEY_DOWN,		KEY_PRINTSCREEN,KEY_F7,			NULL,	// COL  8
+			KEY_DOWN,		KEY_PAGE_UP,	KEY_UP,			KEY_SCROLL_LOCK,KEY_F8,			NULL,	// COL  9
+			KEY_UP,			KEY_END,		KEY_RIGHT,		KEY_PAUSE,		KEY_F9,			NULL,	// COL 10
+			KEY_RIGHT,		KEY_SLASH,		KEY_SEMICOLON,	KEY_P,			KEY_F10,		NULL,	// COL 11
+			KEY_APP,		KEY_RIGHT_SHIFT,KEY_QUOTE,		KEY_RIGHT_BRACE,KEY_F11,		NULL,	// COL 12
+			NULL,			NULL,			NULL,			NULL,			NULL,			NULL	// COL 13
 };
-
+/*
 const uint8_t layer3[84] = {
 			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
- NULL,		KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		KEY_MACRO1,				// COL  0
+ 			NULL,			KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		NULL,	// COL  0
 			KEY_LEFT_GUI,	KEY_Z,			KEY_VOLDN,		KEY_APP,		KEY_MACRO2,		NULL,	// COL  1
 			KEY_LEFT_ALT,	KEY_X,			KEY_VOLUP,		KEY_W,			KEY_MACRO3,		NULL,	// COL  2
 			NULL,			KEY_C,			KEY_MUTE,		KEY_E,			KEY_MACRO4,		NULL,	// COL  3
@@ -105,13 +102,12 @@ const uint8_t layer3[84] = {
 			KEY_RIGHT_GUI,	KEY_SLASH,		KEY_SEMICOLON,	KEY_P,			KEYPAD_SLASH,	NULL,	// COL 10
 			NULL,			NULL,			KEY_QUOTE,		KEY_LEFT_BRACE,	KEYPAD_MINUS,	NULL,	// COL 11
 			KEY_APP,		KEY_RIGHT_SHIFT,NULL,			KEY_RIGHT_BRACE,KEYPAD_PLUS,	NULL,	// COL 12
-			KEY_DELETE,		KEY_FN,			KEY_MACRO5,		KEY_BACKSPACE,	KEYPAD_ASTERIX,			// COL 13
-																			KEY_NUM_LOCK			// COL 14
+			NULL,			NULL,			NULL,			NULL,			NULL,			NULL	// COL 13
 };
 
 const uint8_t layer4[84] = {
 			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
- NULL,		KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		KEY_MACRO1,				// COL  0
+ 			NULL,			KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		NULL,	// COL  0
 			KEY_LEFT_GUI,	KEY_Z,			KEY_VOLDN,		KEY_APP,		KEY_MACRO2,		NULL,	// COL  1
 			KEY_LEFT_ALT,	KEY_X,			KEY_VOLUP,		KEY_W,			KEY_MACRO3,		NULL,	// COL  2
 			NULL,			KEY_C,			KEY_MUTE,		KEY_E,			KEY_MACRO4,		NULL,	// COL  3
@@ -124,22 +120,22 @@ const uint8_t layer4[84] = {
 			KEY_RIGHT_GUI,	KEY_SLASH,		KEY_SEMICOLON,	KEY_P,			KEYPAD_SLASH,	NULL,	// COL 10
 			NULL,			NULL,			KEY_QUOTE,		KEY_LEFT_BRACE,	KEYPAD_MINUS,	NULL,	// COL 11
 			KEY_APP,		KEY_RIGHT_SHIFT,NULL,			KEY_RIGHT_BRACE,KEYPAD_PLUS,	NULL,	// COL 12
-			KEY_DELETE,		KEY_FN,			KEY_MACRO5,		KEY_BACKSPACE,	KEYPAD_ASTERIX,			// COL 13
-																			KEY_NUM_LOCK			// COL 14
+			NULL,			NULL,			NULL,			NULL,			NULL,			NULL	// COL 13
 };
-
+*/
 const uint8_t *layout = layer1;
 
-uint8_t *const row_port[6]  = { _PINB,  _PINB,  _PINB,  _PINB,  _PINB,  _PINB};
-const uint8_t   row_bit[6]  = {  0x01,   0x02,   0x04,   0x08,   0x10,   0x20};
-uint8_t *const col_port[14] = {_PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTC, _PORTD, _PORTD, _PORTF, _PORTF, _PORTF, _PORTF, _PORTF, _PORTF};
-const uint8_t   col_bit[14] = {  0x01,   0x02,   0x04,   0x08,   0x10,   0x40,   0x80,   0x40,   0x01,   0x02,   0x10,   0x20,   0x80,   0x40};
+uint8_t *const row_port[6]  = { _PORTB,  _PORTB,  _PORTB,  _PORTB,  _PORTB,  _PORTB};
+const uint8_t   row_bit[6]  = {  0x01,   0x02,   0x04,     0x08,    0x10,    0x20};
+
+uint8_t *const col_port[14] = {_PIND, 	_PIND, 	_PIND, 	_PIND, 	_PINC, _PIND, 	_PIND, 	_PINF, 	_PINF, 	_PINF,	_PINF, 	_PINF, 	_PINF, _PIND};
+const uint8_t   col_bit[14] = {  0x01,  0x02,   0x04,   0x08,   0x40,   0x40,   0x80,   0x01,   0x02,   0x10,   0x20,   0x40,   0x80,   0x10};
 
 //0		1		2		3	 	4		5		6		7
 //0x01	0x02	0x04	0x08	0x10	0x20	0x40	0x80
 
 bool pressed[84];
-uint8_t queue[7] = {0,0,0,0,0,0,0};
+uint8_t queue[6] = {0,0,0,0,0,0};
 uint8_t mod_keys = 0;
 
 bool semicolonPressed;
@@ -166,6 +162,7 @@ int main(void) {
   init();
   semicolonPressed = false;
   semicolonPassed = false;
+  //SendSingleKey(KEY_E);
   for(;;) poll();
 }
 
@@ -173,44 +170,44 @@ void send(void)
 {
 	uint8_t i;
 
-	if (pressed[FN_KEY1_ID])
+ 	if (pressed[FN_KEY1_ID])
 		layout = layer2;
 	else if (pressed[FN_KEY2_ID])
-		layout = layer3;
-	else if (semicolonPressed)
-		layout = layer4;
+	 	layout = layer2;
+	// else if (semicolonPressed)
+	// 	layout = layer4;
 	else
 		layout = layer1;
 
-	if (layout == layer3 && pressed[KEY_MACRO1_ID])
-	{
-		Macro1();
-		return;
-	}
-	else if (layout == layer3 && pressed[KEY_MACRO2_ID])
+	// if (layout == layer3 && pressed[KEY_MACRO1_ID])
+	// {
+	// 	Macro1();
+	// 	return;
+	// }
+	if (layout == layer2 && pressed[KEY_MACRO2_ID])
 	{
 		Macro2();
 		return;
 	}
-	else if (layout == layer3 && pressed[KEY_MACRO3_ID])
+	else if (layout == layer2 && pressed[KEY_MACRO3_ID])
 	{
 		Macro3();
 		return;
 	}
-	else if (layout == layer3 && pressed[KEY_MACRO4_ID])
+	else if (layout == layer2 && pressed[KEY_MACRO4_ID])
 	{
 		Macro4();
 		return;
 	}
-	else if (layout == layer3 && pressed[KEY_MACRO5_ID])
+	else if (layout == layer2 && pressed[KEY_MACRO5_ID])
 	{
 		Macro5();
 		return;
 	}
-	else if (layout == layer3 && pressed[KEY_MACRO6_ID])
+	else if (layout == layer2 && pressed[KEY_MACRO6_ID])
 	{
 		Macro6();
-		return;
+	 	return;
 	}
 
 	for(i = 0; i < 6; i++)
@@ -225,16 +222,14 @@ void poll(void)
 	uint8_t row, col, key_id;
 	_delay_ms(5);
 
-	for(col = 0; col < 14; col++)
-	{
-		*col_port[col] &= ~col_bit[col];
+	for(row = 0; row < 6; row++){
+		*row_port[row] &= ~row_bit[row];
 		_delay_us(1);
-
-		for(row = 0; row < 6; row++)
+		for(col = 0; col < 14; col++)
 		{
 			key_id = col*6+row;
-
-			if (!(*row_port[row] & row_bit[row]))
+			
+			if (!(*col_port[col] & col_bit[col]))
 			{
 				if (!pressed[key_id])
 					key_press(key_id);
@@ -242,8 +237,7 @@ void poll(void)
 			else if (pressed[key_id])
 				key_release(key_id);
 		}
-
-		*col_port[col] |= col_bit[col];
+		*row_port[row] |= row_bit[row];
 	}
 }
 
@@ -319,16 +313,16 @@ void init(void)
 
 	// PORTB is set as input with pull-up resistors
 	// PORTC,D,F are set to high xoutput
-	DDRB = 0x00;
+	DDRB = 0xFF;
 	PORTB = 0xFF;
 
-	DDRC = 0xFF;
+	DDRC = 0x00;
 	PORTC = 0xFF;
 
-	DDRD = 0xFF;
+	DDRD = 0x00;
 	PORTD = 0xFF;
 
-	DDRF = 0xFF;
+	DDRF = 0x00;
 	PORTF = 0xFF;
 
 	for(i = 0; i < 84; i++)
