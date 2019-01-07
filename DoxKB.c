@@ -19,7 +19,8 @@
 #define KEY_FN          0
 #define FN_KEY1_ID		0*6+0
 #define FN_KEY2_ID		6*6+0
-
+#define KEY_TOGGLE 		0
+#define KEY_TOGGLE_ID   5*6+3
 #define KEY_MACRO1		0
 #define KEY_MACRO1_ID	13*6+0
 #define KEY_MACRO2		0
@@ -51,13 +52,31 @@ const uint8_t is_modifier[84] = {
 			0,				0,				0,				0,				0,				0		// COL 13
 };
 
-const uint8_t layer1[84] = {
+const uint8_t layer1Win[84] = {
 			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
 			KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_CTRL,	KEY_TAB,		KEY_EQUAL,		NULL, 	// COL  0
 			KEY_LEFT,		KEY_Z,			KEY_A,			KEY_Q,			KEY_1,			NULL,	// COL  1
 			KEY_UP,			KEY_X,			KEY_S,			KEY_W,			KEY_2,			NULL,	// COL  2
 			KEY_DOWN,		KEY_C,			KEY_D,			KEY_E,			KEY_3, 			NULL,	// COL  3
 			KEY_LEFT_GUI,	KEY_V,			KEY_F,			KEY_R,			KEY_4,			NULL,	// COL  4
+			KEY_BACKSPACE,	KEY_B,			KEY_G,			KEY_T,			KEY_5,			NULL,	// COL  5
+			KEY_FN,			KEY_ENTER,		KEY_RIGHT_ALT,	KEY_ESC,		NULL,			NULL,	// COL  6
+			KEY_SPACE,		KEY_N,			KEY_H,			KEY_Y,			KEY_6,			NULL,	// COL  7
+			KEY_LEFT,		KEY_M,			KEY_J,			KEY_U,			KEY_7,			NULL,	// COL  8
+			KEY_DOWN,		KEY_COMMA,		KEY_K,			KEY_I,			KEY_8,			NULL,	// COL  9
+			KEY_UP,			KEY_PERIOD,		KEY_L,			KEY_O,			KEY_9,			NULL,	// COL 10
+			KEY_RIGHT,		KEY_SLASH,		KEY_SEMICOLON,	KEY_P,			KEY_0,			NULL,	// COL 11
+			KEY_APP,		KEY_RIGHT_SHIFT,KEY_QUOTE,		KEY_LEFT_BRACE,	KEY_MINUS,		NULL,	// COL 12
+			NULL,			NULL,			NULL,			NULL,			NULL,			NULL	// COL 13
+};
+
+const uint8_t layer1Mac[84] = {
+			//ROW 0			ROW 1			ROW 2			ROW 3			ROW 4
+			KEY_FN,			KEY_LEFT_SHIFT,	KEY_LEFT_GUI,	KEY_TAB,		KEY_EQUAL,		NULL, 	// COL  0
+			KEY_LEFT,		KEY_Z,			KEY_A,			KEY_Q,			KEY_1,			NULL,	// COL  1
+			KEY_UP,			KEY_X,			KEY_S,			KEY_W,			KEY_2,			NULL,	// COL  2
+			KEY_DOWN,		KEY_C,			KEY_D,			KEY_E,			KEY_3, 			NULL,	// COL  3
+			KEY_LEFT_CTRL,	KEY_V,			KEY_F,			KEY_R,			KEY_4,			NULL,	// COL  4
 			KEY_BACKSPACE,	KEY_B,			KEY_G,			KEY_T,			KEY_5,			NULL,	// COL  5
 			KEY_FN,			KEY_ENTER,		KEY_RIGHT_ALT,	KEY_ESC,		NULL,			NULL,	// COL  6
 			KEY_SPACE,		KEY_N,			KEY_H,			KEY_Y,			KEY_6,			NULL,	// COL  7
@@ -76,7 +95,7 @@ const uint8_t layer2[84] = {
 			KEY_MACRO3,		KEY_X,			KEY_VOLUP,		KEY_TILDE,		KEY_F2,			NULL,	// COL  2
 			KEY_MACRO4,		KEY_C,			KEY_DELETE,		KEY_E,			KEY_F3, 		NULL,	// COL  3
 			KEY_MACRO5,		KEY_V,			KEY_MUTE,		KEY_R,			KEY_F4,			NULL,	// COL  4
-			KEY_BACKSPACE,	KEY_B,			KEY_G,			KEY_T,			KEY_F5,			NULL,	// COL  5
+			KEY_BACKSPACE,	KEY_B,			KEY_G,			KEY_TOGGLE,		KEY_F5,			NULL,	// COL  5
 			KEY_FN,			KEY_ENTER,		KEY_RIGHT_ALT,	KEY_ESC,		NULL,			NULL,	// COL  6
 			KEY_SPACE,		KEY_HOME,		KEY_LEFT,		KEY_Y,			KEY_F6,			NULL,	// COL  7
 			KEY_LEFT,		KEY_PAGE_DOWN,	KEY_DOWN,		KEY_PRINTSCREEN,KEY_F7,			NULL,	// COL  8
@@ -105,7 +124,8 @@ const uint8_t layer3[84] = {
 			NULL,			NULL,			NULL,			NULL,			NULL,			NULL	// COL 13
 };
 
-const uint8_t *layout = layer1;
+bool winMode = true;
+const uint8_t *layout = layer1Win;
 
 uint8_t *const row_port[6]  = { _PORTB,  _PORTB,  _PORTB,  _PORTB,  _PORTB,  _PORTB};
 const uint8_t   row_bit[6]  = {  0x01,   0x02,   0x04,     0x08,    0x10,    0x20};
@@ -122,6 +142,8 @@ uint8_t mod_keys = 0;
 
 bool semicolonPressed;
 bool semicolonPassed;
+bool ctrlPressed;
+bool ctrlPassed;
 
 void init(void);
 void send(void);
@@ -144,7 +166,9 @@ int main(void) {
   init();
   semicolonPressed = false;
   semicolonPassed = false;
-  //SendSingleKey(KEY_E);
+  ctrlPassed = false;
+  ctrlPressed = false;
+
   for(;;) poll();
 }
 
@@ -158,14 +182,11 @@ void send(void)
 	 	layout = layer2;
 	else if (semicolonPressed)
 		layout = layer3;
+	else if (winMode)
+		layout = layer1Win;
 	else
-		layout = layer1;
+		layout = layer1Mac;
 
-	// if (layout == layer3 && pressed[KEY_MACRO1_ID])
-	// {
-	// 	Macro1();
-	// 	return;
-	// }
 	if (layout == layer2 && pressed[KEY_MACRO2_ID])
 	{
 		Macro2();
@@ -190,6 +211,10 @@ void send(void)
 	{
 		Macro6();
 	 	return;
+	}
+	else if (layout == layer2 && pressed[KEY_TOGGLE_ID]){
+		winMode = !winMode;
+		return;
 	}
 
 	for(i = 0; i < 6; i++)
@@ -236,11 +261,28 @@ void key_press(uint8_t key_id)
 		return;
 	}
 
+	if (is_modifier[key_id] && ((!winMode && layer1Mac[key_id] == KEY_LEFT_GUI)  || (winMode && layer1Win[key_id] == KEY_LEFT_CTRL)))
+	{
+		ctrlPressed =true;
+		ctrlPassed = false;
+		return;
+	}
+
 	if (semicolonPressed)
 		semicolonPassed = true;
+	
+	if (ctrlPressed && !ctrlPassed){
+		ctrlPassed = true;
+		if (winMode)
+			mod_keys |= KEY_LEFT_CTRL;
+		else
+			mod_keys |= KEY_LEFT_GUI;
+	}
 
-	if (is_modifier[key_id])
-		mod_keys |= layer1[key_id];
+	if (is_modifier[key_id] && winMode)
+		mod_keys |= layer1Win[key_id];
+	else if (is_modifier[key_id] && !winMode)
+		mod_keys |= layer1Mac[key_id];
 	else
 	{
 		for(i = 5; i>0; i--)
@@ -264,6 +306,21 @@ void key_release(uint8_t key_id)
 		if (semicolonPassed == false)
 			SendSingleKey(KEY_SEMICOLON);
 		return;
+	}
+
+	if (is_modifier[key_id] && ((!winMode && layer1Mac[key_id] == KEY_LEFT_GUI)  || (winMode && layer1Win[key_id] == KEY_LEFT_CTRL))){
+		ctrlPressed = false;
+
+		if (ctrlPassed == false){
+			SendSingleKey(KEY_ESC);
+			return;
+		}
+		else{
+			mod_keys &= ~layout[key_id];
+			send();
+			return;
+		}
+		
 	}
 
 	if (is_modifier[key_id])
@@ -363,7 +420,6 @@ void Macro2(void)
 
 	SendSingleKey(KEY_9);
 	SendSingleKey(KEY_0);
-
 	SendSingleModifier(0);
 
 	SendSingleKey(KEY_LEFT);
